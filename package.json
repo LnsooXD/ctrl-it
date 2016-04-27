@@ -1,6 +1,6 @@
 {
   "name": "ctrl-it",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A control-flow iterator. This is a extra of each. You Can break or continue when in iterating.",
   "author": "LnsooXD <lnsooxd@gmail.com>",
   "license": "MIT",
