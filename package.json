@@ -1,6 +1,6 @@
 {
   "name": "ctrl-it",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A control-flow iterator. This is a extra of each. You Can break or continue when in iterating.",
   "author": "LnsooXD <lnsooxd@gmail.com>",
   "license": "MIT",
@@ -14,7 +14,8 @@
     "iterator",
     "control",
     "flow",
-    "ctrlflow"
+    "ctrlflow",
+    "it"
   ],
   "main": "it.js",
   "scripts": {
