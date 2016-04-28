@@ -93,10 +93,6 @@ yield it.every(arr, function* (i, v){
 
     >if the iterator-callback function return true, the iterator will be breaked.
 
-##Dependencies
-
-- [is-type-of]
-
 ##Authors
 
 - [LnsooXD](https://github.com/LnsooXD)
@@ -104,5 +100,3 @@ yield it.every(arr, function* (i, v){
 ## License
 
 - [MIT](http://spdx.org/licenses/MIT)
-
-[is-type-of]: https://github.com/node-modules/is-type-of#is-type-of
