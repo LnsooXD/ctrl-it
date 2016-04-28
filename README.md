@@ -77,11 +77,16 @@ yield it.every(arr, function* (i, v){
 
 ##API
 
-it.any: iterate all values of a object/array, even the hasOwnProperty function returns false
-it.some: the generator type function of it.any
-it.each: just iterate the values of a object/array the hasOwnProperty function returns true 
-it.every: the generator type function of it.each
-flow control: if the iterator-callback function return true, the iterator will be breaked.
+- it.any(obj, function it(key, value){...}) 
+iterate all values of a object/array, even the hasOwnProperty function returns false
+- it.some(obj, function* it(key, value){...})
+the generator type function of it.any
+- it.each(obj, function it(key, value){...})
+just iterate the values of a object/array the hasOwnProperty function returns true 
+- it.every(obj, function* it(key, value){...})
+the generator type function of it.each
+- flow control
+if the iterator-callback function return true, the iterator will be breaked.
 
 ##Dependencies
 
