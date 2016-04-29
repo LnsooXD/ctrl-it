@@ -73,6 +73,42 @@ yield it.every(arr, function* (i, v){
      }
  });
  // beacuse of 'return true' breaking the iterator, resule is '123
+ 
+ // filter support
+ // if 'filter' function not defined or return true, the 'iterator' function will receiver k, v pair.
+ 
+ var obj = {
+     a: 'A',
+     b: 'B',
+     c: 'C',
+     e: 'E',
+     f: 'F'
+ }
+ 
+ var result = '';
+ it.each(obj, function iterator(k, v){
+    result += k;
+    result += v;
+ }, function filter(k, v) {
+    return 'k' === 'a' || 'k' === 'c'
+ })
+ 
+ // result === 'AC'
+ 
+ var arr = [1,2,3,4,5,6,7]
+ 
+ var result = '';
+ yield it.every(arr, function* iterator(k, v) {
+     result += k;
+     result += v;
+ }, function* filter(k, v) {
+     return (v % 2) === 0;
+});
+
+// result === '123456'
+
+// The filter all supported by it.any and it.some
+
 ```
 
 ##API
