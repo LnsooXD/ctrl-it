@@ -48,21 +48,21 @@ describe('any', function () {
       });
       should(result).equal('01122334455667prototypeabc');
     });
-  });
 
-  it('array result should not contains __proto__', function () {
-    var arr = [1, 2, 3, 4, 5, 6, 7];
-    arr.__proto__ = ['a', 'b', 'c'];
-    var result = '';
-    any(arr, function (k, v) {
-      result += k;
-      if (k === '__proto__') {
-        result += v.join('');
-      } else {
-        result += v;
-      }
+    it('array result should not contains __proto__', function () {
+      var arr = [1, 2, 3, 4, 5, 6, 7];
+      arr.__proto__ = ['a', 'b', 'c'];
+      var result = '';
+      any(arr, function (k, v) {
+        result += k;
+        if (k === '__proto__') {
+          result += v.join('');
+        } else {
+          result += v;
+        }
+      });
+      should(result).equal('01122334455667');
     });
-    should(result).equal('01122334455667');
   });
 
   describe('object', function () {
@@ -86,9 +86,7 @@ describe('any', function () {
       });
       should(result).equal('aAbBcCdDprototypeEF');
     });
-  });
 
-  describe('object', function () {
     it('object result should contains __proto__', function () {
       var obj = {
         'a': 'A',
@@ -106,6 +104,39 @@ describe('any', function () {
         result += v;
       });
       should(result).equal('aAbBcCdDeEfF');
+    });
+  });
+
+  describe('filter', function () {
+    it('test for array', function () {
+      var arr = [1, 2, 3, 4, 5, 6, 7];
+      var result = '';
+      any(arr, function (k, v) {
+        result += k;
+        result += v;
+      }, function (k, v) { // filter
+        return (v % 2) === 0;
+      });
+      should(result).equal('123456');
+    });
+
+    it('test for object', function () {
+      var obj = {
+        'a': 'A',
+        'b': 'B',
+        'c': 'C',
+        'd': 'D',
+        'e': 'E',
+        'f': 'F'
+      };
+      var result = '';
+      any(obj, function (k, v) {
+        result += k;
+        result += v;
+      }, function (k, v) {
+        return k === 'a' || k === 'd'
+      });
+      should(result).equal('aAdD');
     });
   });
 
