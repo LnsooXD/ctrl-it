@@ -1,14 +1,12 @@
 "use strict";
 /*!
  * ctrl-it - test/every.test.js
- * Copyright(c) 2016 LnsooXD <LnsooXD@gmail.com>
+ * Copyright(c) 2017 LnsooXD <LnsooXD@gmail.com>
  * MIT Licensed
  */
 var util = require('../lib/util');
 
 if (util.isGeneratable()) {
-  require('mocha-generators').install();
-
   var every = require('../lib/every');
   var should = require('should');
 

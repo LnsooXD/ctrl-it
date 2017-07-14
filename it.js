@@ -1,7 +1,7 @@
 "use strict";
 /*!
  * ctrl-it - it.js
- * Copyright(c) 2016 LnsooXD <LnsooXD@gmail.com>
+ * Copyright(c) 2017 LnsooXD <LnsooXD@gmail.com>
  * MIT Licensed
  */
 var util = require('./lib/util');
@@ -15,3 +15,7 @@ if (util.isGeneratable()) {
   mod.some = require('./lib/some');
 }
 
+if (util.isAsyncable()) {
+  mod.all = require('./lib/all');
+  mod.total = require('./lib/total');
+}

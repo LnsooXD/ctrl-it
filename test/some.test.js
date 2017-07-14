@@ -1,15 +1,12 @@
 "use strict";
 /*!
  * ctrl-it - test/some.test.js
- * Copyright(c) 2016 LnsooXD <LnsooXD@gmail.com>
+ * Copyright(c) 2017 LnsooXD <LnsooXD@gmail.com>
  * MIT Licensed
  */
 var util = require('../lib/util');
 
 if (util.isGeneratable()) {
-
-  require('mocha-generators').install();
-
   var some = require('../lib/some');
   var should = require('should');
 

@@ -12,6 +12,7 @@ test: install
 		--reporter $(REPORTER) \
 		--timeout $(TIMEOUT) \
 		--require should \
+		-r mocha-plugin-co \
 		$(MOCHA_OPTS) \
 		$(TESTS)
 .PHONY: test

@@ -1,7 +1,7 @@
 "use strict";
 /*!
  * ctrl-it - test/each.test.js
- * Copyright(c) 2016 LnsooXD <LnsooXD@gmail.com>
+ * Copyright(c) 2017 LnsooXD <LnsooXD@gmail.com>
  * MIT Licensed
  */
 

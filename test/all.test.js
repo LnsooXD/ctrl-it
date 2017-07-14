@@ -1,44 +1,44 @@
 "use strict";
 /*!
- * ctrl-it - test/any.test.js
+ * ctrl-it - test/all.test.js
  * Copyright(c) 2017 LnsooXD <LnsooXD@gmail.com>
  * MIT Licensed
  */
 
-var any = require('../lib/any');
+var all = require('../lib/all');
 var should = require('should');
 
-describe('any', function () {
-  describe('array', function () {
+describe('all', () => {
+  describe('array', () => {
 
-    it('common test for array', function () {
+    it('common test for array', async() => {
       var arr = [1, 2, 3, 4, 5, 6, 7];
       var result = '';
-      any(arr, function (k, v) {
+      await all(arr, async(k, v) => {
         result += k;
         result += v;
       });
-      should(result).equal('01122334455667');
+      should('01122334455667').equal(result);
     });
 
-    it('break test for array', function () {
+    it('break test for array', async() => {
       var arr = [1, 2, 3, 4, 5, 6, 7];
       var result = '';
-      any(arr, function (k, v) {
+      await all(arr, async(k, v) => {
         result += k;
         result += v;
         if (k == 4) {
           return true;
         }
       });
-      should(result).equal('0112233445');
+      should('0112233445').equal(result);
     });
 
-    it('array result should contains prototype', function () {
+    it('array result should not contains prototype', async() => {
       var arr = [1, 2, 3, 4, 5, 6, 7];
       arr.prototype = ['a', 'b', 'c'];
       var result = '';
-      any(arr, function (k, v) {
+      await all(arr, async(k, v) => {
         result += k;
         if (k === 'prototype') {
           result += v.join('');
@@ -46,14 +46,15 @@ describe('any', function () {
           result += v;
         }
       });
-      should(result).equal('01122334455667prototypeabc');
+      should('01122334455667').equal(result);
     });
 
-    it('array result should not contains __proto__', function () {
+
+    it('array result should not contains __proto__', async() => {
       var arr = [1, 2, 3, 4, 5, 6, 7];
       arr.__proto__ = ['a', 'b', 'c'];
       var result = '';
-      any(arr, function (k, v) {
+      await all(arr, async(k, v) => {
         result += k;
         if (k === '__proto__') {
           result += v.join('');
@@ -61,12 +62,12 @@ describe('any', function () {
           result += v;
         }
       });
-      should(result).equal('01122334455667');
+      should('01122334455667').equal(result);
     });
   });
 
   describe('object', function () {
-    it('object result should contains prototype', function () {
+    it('object result should contains prototype', async() => {
       var obj = {
         'a': 'A',
         'b': 'B',
@@ -76,7 +77,7 @@ describe('any', function () {
       obj.prototype = ['E', 'F'];
 
       var result = '';
-      any(obj, function (k, v) {
+      await all(obj, async(k, v) => {
         result += k;
         if (k === 'prototype') {
           result += v.join('');
@@ -84,10 +85,10 @@ describe('any', function () {
           result += v;
         }
       });
-      should(result).equal('aAbBcCdDprototypeEF');
+      should('aAbBcCdDprototypeEF').equal(result);
     });
 
-    it('object result should contains __proto__', function () {
+    it('object result should not contains __proto__', async() => {
       var obj = {
         'a': 'A',
         'b': 'B',
@@ -99,16 +100,16 @@ describe('any', function () {
         'f': 'F'
       };
       var result = '';
-      any(obj, function (k, v) {
+      await all(obj, async(k, v) => {
         result += k;
         result += v;
       });
-      should(result).equal('aAbBcCdDeEfF');
+      should('aAbBcCdD').equal(result);
     });
   });
 
   describe('map', function () {
-    it('map result should contains prototype', function () {
+    it('map result should not contains prototype', async() => {
       var map = new Map();
       map.set('a', 'A');
       map.set('b', 'B');
@@ -118,7 +119,7 @@ describe('any', function () {
       map.prototype = ['E', 'F'];
 
       var result = '';
-      any(map, function (k, v) {
+      await all(map, async(k, v) => {
         result += k;
         if (k === 'prototype') {
           result += v.join('');
@@ -126,10 +127,10 @@ describe('any', function () {
           result += v;
         }
       });
-      'aAbBcCdDprototypeEF'.should.equal(result);
+      should('aAbBcCdD').equal(result);
     });
 
-    it('map result should contains __proto__', function () {
+    it('map result should not contains __proto__', async() => {
       var map = new Map();
       map.set('a', 'A');
       map.set('b', 'B');
@@ -140,7 +141,7 @@ describe('any', function () {
       map.__proto__['f'] = 'F';
 
       var result = '';
-      any(map, function (k, v) {
+      await all(map, async(k, v) => {
         result += k;
         result += v;
       });
@@ -148,24 +149,25 @@ describe('any', function () {
       delete map.__proto__['e'];
       delete map.__proto__['f'];
 
-      'aAbBcCdDeEfF'.should.equal(result);
+      should('aAbBcCdD').equal(result);
     });
   });
 
+
   describe('filter', function () {
-    it('test for array', function () {
+    it('test for array', async() => {
       var arr = [1, 2, 3, 4, 5, 6, 7];
       var result = '';
-      any(arr, function (k, v) {
+      await all(arr, async(k, v) => {
         result += k;
         result += v;
       }, function (k, v) { // filter
         return (v % 2) === 0;
       });
-      should(result).equal('123456');
+      should('123456').equal(result);
     });
 
-    it('test for object', function () {
+    it('test for object', async() => {
       var obj = {
         'a': 'A',
         'b': 'B',
@@ -175,13 +177,13 @@ describe('any', function () {
         'f': 'F'
       };
       var result = '';
-      any(obj, function (k, v) {
+      await all(obj, async(k, v) => {
         result += k;
         result += v;
-      }, function (k, v) {
+      }, async(k, v) => {
         return k === 'a' || k === 'd'
       });
-      should(result).equal('aAdD');
+      should('aAdD').equal(result);
     });
   });
 
