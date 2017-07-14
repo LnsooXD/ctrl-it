@@ -18,7 +18,7 @@ if (util.isGeneratable()) {
 }
 
 // async/await functions
-if (util.isGeneratable()) {
+if (util.isAsyncable()) {
     require('./all.test');
     require('./total.test');
 }
