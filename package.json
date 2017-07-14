@@ -22,9 +22,9 @@
     "test": "make test"
   },
   "devDependencies": {
-    "mocha": "^2.4.5",
-    "mocha-generators": "^1.2.0",
-    "should": "^8.3.1"
+    "mocha": "^3.4.2",
+    "mocha-generators": "^2.0.0",
+    "should": "^11.2.1"
   },
   "files": [
     "LICENSE",
