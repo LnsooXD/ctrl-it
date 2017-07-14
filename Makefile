@@ -1,4 +1,4 @@
-TESTS = test/*.test.js
+TESTS = test/index.test.js
 REPORTER = tap
 TIMEOUT = 1000
 MOCHA_OPTS =
