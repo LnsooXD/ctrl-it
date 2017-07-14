@@ -15,20 +15,20 @@ if (util.isGeneratable()) {
   describe('every', function () {
     describe('array', function () {
 
-      it('common test for array', function *() {
+      it('common test for array', function* () {
         var arr = [1, 2, 3, 4, 5, 6, 7];
         var result = '';
-        yield every(arr, function *(k, v) {
+        yield every(arr, function* (k, v) {
           result += k;
           result += v;
         });
         should(result).equal('01122334455667');
       });
 
-      it('break test for array', function *() {
+      it('break test for array', function* () {
         var arr = [1, 2, 3, 4, 5, 6, 7];
         var result = '';
-        yield every(arr, function *(k, v) {
+        yield every(arr, function* (k, v) {
           result += k;
           result += v;
           if (k == 4) {
@@ -38,11 +38,11 @@ if (util.isGeneratable()) {
         should(result).equal('0112233445');
       });
 
-      it('array result should not contains prototype', function *() {
+      it('array result should not contains prototype', function* () {
         var arr = [1, 2, 3, 4, 5, 6, 7];
         arr.prototype = ['a', 'b', 'c'];
         var result = '';
-        yield every(arr, function *(k, v) {
+        yield every(arr, function* (k, v) {
           result += k;
           if (k === 'prototype') {
             result += v.join('');
@@ -53,11 +53,11 @@ if (util.isGeneratable()) {
         should(result).equal('01122334455667');
       });
 
-      it('array result should not contains __proto__', function *() {
+      it('array result should not contains __proto__', function* () {
         var arr = [1, 2, 3, 4, 5, 6, 7];
         arr.__proto__ = ['a', 'b', 'c'];
         var result = '';
-        yield every(arr, function *(k, v) {
+        yield every(arr, function* (k, v) {
           result += k;
           if (k === '__proto__') {
             result += v.join('');
@@ -103,7 +103,7 @@ if (util.isGeneratable()) {
           'f': 'F'
         };
         var result = '';
-        yield every(obj, function *(k, v) {
+        yield every(obj, function* (k, v) {
           result += k;
           result += v;
         });
@@ -111,6 +111,50 @@ if (util.isGeneratable()) {
       });
     });
 
+    describe('map', function () {
+      it('map result should not contains prototype', function* () {
+        var map = new Map();
+        map.set('a', 'A');
+        map.set('b', 'B');
+        map.set('c', 'C');
+        map.set('d', 'D');
+
+        map.prototype = ['E', 'F'];
+
+        var result = '';
+        yield every(map, function* (k, v) {
+          result += k;
+          if (k === 'prototype') {
+            result += v.join('');
+          } else {
+            result += v;
+          }
+        });
+        should('aAbBcCdD').equal(result);
+      });
+
+      it('map result should not contains __proto__', function* () {
+        var map = new Map();
+        map.set('a', 'A');
+        map.set('b', 'B');
+        map.set('c', 'C');
+        map.set('d', 'D');
+
+        map.__proto__['e'] = 'E';
+        map.__proto__['f'] = 'F';
+
+        var result = '';
+        yield every(map, function* (k, v) {
+          result += k;
+          result += v;
+        });
+
+        delete map.__proto__['e'];
+        delete map.__proto__['f'];
+
+        should(result).equal('aAbBcCdD');
+      });
+    });
 
     describe('filter', function () {
       it('test for array', function* () {
@@ -147,7 +191,5 @@ if (util.isGeneratable()) {
 
   });
 } else {
-  describe('every is not suitable for this node ', function () {
-  });
+  describe('every is not suitable for this node ', function () {});
 }
-

@@ -16,20 +16,20 @@ if (util.isGeneratable()) {
   describe('some', function () {
     describe('array', function () {
 
-      it('common test for array', function *() {
+      it('common test for array', function* () {
         var arr = [1, 2, 3, 4, 5, 6, 7];
         var result = '';
-        yield some(arr, function *(k, v) {
+        yield some(arr, function* (k, v) {
           result += k;
           result += v;
         });
         should(result).equal('01122334455667');
       });
 
-      it('break test for array', function *() {
+      it('break test for array', function* () {
         var arr = [1, 2, 3, 4, 5, 6, 7];
         var result = '';
-        yield some(arr, function *(k, v) {
+        yield some(arr, function* (k, v) {
           result += k;
           result += v;
           if (k == 4) {
@@ -39,7 +39,7 @@ if (util.isGeneratable()) {
         should(result).equal('0112233445');
       });
 
-      it('array result should contains prototype', function *() {
+      it('array result should contains prototype', function* () {
         var arr = [1, 2, 3, 4, 5, 6, 7];
         arr.prototype = ['a', 'b', 'c'];
         var result = '';
@@ -55,11 +55,11 @@ if (util.isGeneratable()) {
       });
 
 
-      it('array result should not contains __proto__', function *() {
+      it('array result should not contains __proto__', function* () {
         var arr = [1, 2, 3, 4, 5, 6, 7];
         arr.__proto__ = ['a', 'b', 'c'];
         var result = '';
-        yield some(arr, function *(k, v) {
+        yield some(arr, function* (k, v) {
           result += k;
           if (k === '__proto__') {
             result += v.join('');
@@ -71,8 +71,52 @@ if (util.isGeneratable()) {
       });
     });
 
+    describe('map', function () {
+      it('map result should contains prototype', function* () {
+        var map = new Map();
+        map.set('a', 'A');
+        map.set('b', 'B');
+        map.set('c', 'C');
+        map.set('d', 'D');
+
+        map.prototype = ['E', 'F'];
+
+        var result = '';
+        yield some(map, function* (k, v) {
+          result += k;
+          if (k === 'prototype') {
+            result += v.join('');
+          } else {
+            result += v;
+          }
+        });
+        should('aAbBcCdDprototypeEF').equal(result);
+      });
+
+      it('map result should contains __proto__', function* () {
+        var map = new Map();
+        map.set('a', 'A');
+        map.set('b', 'B');
+        map.set('c', 'C');
+        map.set('d', 'D');
+
+        map.__proto__['e'] = 'E';
+        map.__proto__['f'] = 'F';
+        var result = '';
+        yield some(map, function* (k, v) {
+          result += k;
+          result += v;
+        });
+
+        delete map.__proto__['e'];
+        delete map.__proto__['f'];
+
+        should('aAbBcCdDeEfF').equal(result);
+      });
+    });
+
     describe('object', function () {
-      it('object result should contains prototype', function *() {
+      it('object result should contains prototype', function* () {
         var obj = {
           'a': 'A',
           'b': 'B',
@@ -82,7 +126,7 @@ if (util.isGeneratable()) {
         obj.prototype = ['E', 'F'];
 
         var result = '';
-        yield some(obj, function *(k, v) {
+        yield some(obj, function* (k, v) {
           result += k;
           if (k === 'prototype') {
             result += v.join('');
@@ -105,7 +149,7 @@ if (util.isGeneratable()) {
           'f': 'F'
         };
         var result = '';
-        yield some(obj, function *(k, v) {
+        yield some(obj, function* (k, v) {
           result += k;
           result += v;
         });
@@ -148,6 +192,5 @@ if (util.isGeneratable()) {
 
   });
 } else {
-  describe('some is not suitable for this node ', function () {
-  });
+  describe('some is not suitable for this node ', function () {});
 }

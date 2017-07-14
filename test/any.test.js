@@ -107,6 +107,51 @@ describe('any', function () {
     });
   });
 
+  describe('map', function () {
+    it('map result should contains prototype', function () {
+      var map = new Map();
+      map.set('a', 'A');
+      map.set('b', 'B');
+      map.set('c', 'C');
+      map.set('d', 'D');
+
+      map.prototype = ['E', 'F'];
+
+      var result = '';
+      any(map, function (k, v) {
+        result += k;
+        if (k === 'prototype') {
+          result += v.join('');
+        } else {
+          result += v;
+        }
+      });
+      'aAbBcCdDprototypeEF'.should.equal(result);
+    });
+
+    it('map result should contains __proto__', function () {
+      var map = new Map();
+      map.set('a', 'A');
+      map.set('b', 'B');
+      map.set('c', 'C');
+      map.set('d', 'D');
+
+      map.__proto__['e'] = 'E';
+      map.__proto__['f'] = 'F';
+
+      var result = '';
+      any(map, function (k, v) {
+        result += k;
+        result += v;
+      });
+
+      delete map.__proto__['e'];
+      delete map.__proto__['f'];
+
+      'aAbBcCdDeEfF'.should.equal(result);
+    });
+  });
+
   describe('filter', function () {
     it('test for array', function () {
       var arr = [1, 2, 3, 4, 5, 6, 7];

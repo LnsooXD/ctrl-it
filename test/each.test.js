@@ -18,7 +18,7 @@ describe('each', function () {
         result += k;
         result += v;
       });
-      should(result).equal('01122334455667');
+      should('01122334455667').equal(result);
     });
 
     it('break test for array', function () {
@@ -31,7 +31,7 @@ describe('each', function () {
           return true;
         }
       });
-      should(result).equal('0112233445');
+      should('0112233445').equal(result);
     });
 
     it('array result should not contains prototype', function () {
@@ -46,7 +46,7 @@ describe('each', function () {
           result += v;
         }
       });
-      should(result).equal('01122334455667');
+      should('01122334455667').equal(result);
     });
 
 
@@ -62,7 +62,7 @@ describe('each', function () {
           result += v;
         }
       });
-      should(result).equal('01122334455667');
+      should('01122334455667').equal(result);
     });
   });
 
@@ -85,7 +85,7 @@ describe('each', function () {
           result += v;
         }
       });
-      should(result).equal('aAbBcCdDprototypeEF');
+      should('aAbBcCdDprototypeEF').equal(result);
     });
 
     it('object result should not contains __proto__', function () {
@@ -104,9 +104,55 @@ describe('each', function () {
         result += k;
         result += v;
       });
-      should(result).equal('aAbBcCdD');
+      should('aAbBcCdD').equal(result);
     });
   });
+
+  describe('map', function () {
+    it('map result should not contains prototype', function () {
+      var map = new Map();
+      map.set('a', 'A');
+      map.set('b', 'B');
+      map.set('c', 'C');
+      map.set('d', 'D');
+
+      map.prototype = ['E', 'F'];
+
+      var result = '';
+      each(map, function (k, v) {
+        result += k;
+        if (k === 'prototype') {
+          result += v.join('');
+        } else {
+          result += v;
+        }
+      });
+      should('aAbBcCdD').equal(result);
+    });
+
+    it('map result should not contains __proto__', function () {
+      var map = new Map();
+      map.set('a', 'A');
+      map.set('b', 'B');
+      map.set('c', 'C');
+      map.set('d', 'D');
+
+      map.__proto__['e'] = 'E';
+      map.__proto__['f'] = 'F';
+
+      var result = '';
+      each(map, function (k, v) {
+        result += k;
+        result += v;
+      });
+
+      delete map.__proto__['e'];
+      delete map.__proto__['f'];
+
+      should('aAbBcCdD').equal(result);
+    });
+  });
+
 
   describe('filter', function () {
     it('test for array', function () {
@@ -118,7 +164,7 @@ describe('each', function () {
       }, function (k, v) { // filter
         return (v % 2) === 0;
       });
-      should(result).equal('123456');
+      should('123456').equal(result);
     });
 
     it('test for object', function () {
@@ -137,7 +183,7 @@ describe('each', function () {
       }, function (k, v) {
         return k === 'a' || k === 'd'
       });
-      should(result).equal('aAdD');
+      should('aAdD').equal(result);
     });
   });
 
