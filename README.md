@@ -43,6 +43,14 @@ yield it.some(obj, function *(k, v){
     result += v;
     // run some generator codes
 });
+
+// async/await one is:
+var result = '';
+await it.total(obj,  async (k, v) => {
+    result += k;
+    result += v;
+    // run some async/await codes
+});
 // beacuse it has  __proto__ so result is:
 // result == aAbBcCdDeE''
 
@@ -66,6 +74,17 @@ it.each(arr, function(i, v){
 var result = '';
 var count = 0;
 yield it.every(arr, function* (i, v){
+     result += v;
+     count ++;
+     if (count >= 3) {
+         return true; // 'return true' makes this iterator break;
+     }
+ });
+
+ // async/await one:
+var result = '';
+var count = 0;
+yield it.all(arr, async (i, v) => {
      result += v;
      count ++;
      if (count >= 3) {
@@ -119,12 +138,18 @@ yield it.every(arr, function* (i, v){
 - it.some(obj, function* it(key, value){...})
 
     >the generator type function of it.any
+- it.total(obj, async function it(key, value){...})
+
+    >the async/await type function of it.any
 - it.each(obj, function it(key, value){...})
 
     >just iterate the values of a object/array the hasOwnProperty function returns true 
 - it.every(obj, function* it(key, value){...})
 
     >the generator type function of it.each
+- it.all(obj, async function it(key, value){...})
+
+    >the async/await  type function of it.each
 - flow control
 
     >if the iterator-callback function return true, the iterator will be breaked.
